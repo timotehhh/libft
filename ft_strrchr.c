@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 00:46:12 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/25 21:37:13 by agcolas          ###   ########.fr       */
+/*   Created: 2020/11/25 18:52:15 by agcolas           #+#    #+#             */
+/*   Updated: 2020/11/25 18:58:56 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
-int		main(void)
+char	*ft_strrchr(const char *s, int c)
 {
-	char *str = "  \t \t \n   \n\n\n\t";
-	char *bite = ft_strtrim(str, " \n\t");
+	int		i;
+	char	*str;
+	int		occu;
+	int		size;
 
-	printf("%s\n", bite);
-	free(bite);
-	return (0);
+	str = (char *)s;
+	size = ft_strlen(str);
+	i = 0;
+	occu = -1;
+	while (i <= size)
+	{
+		if (str[i] == (char)c)
+			occu = i;
+		i++;
+	}
+	if (occu != -1)
+		return (&str[occu]);
+	return (NULL);
 }
