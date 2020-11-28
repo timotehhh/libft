@@ -6,7 +6,7 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 00:46:12 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/28 02:11:56 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/11/28 19:54:14 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@
 
 int	main(void)
 {
+	char	*bite = "biteioiioioqwiqwhjkdahjk";
+	printf("\n%s", ft_strjoin("\0", bite));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 17:12:14 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/27 18:59:47 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/11/28 18:38:32 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	char	*dest;
 	int		size;
 
+	if (!s1)
+		return (NULL);
 	size = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	if (!(dest = (char *)malloc((sizeof(char) * size) + 1)))
 		return (NULL);

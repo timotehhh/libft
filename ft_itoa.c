@@ -6,28 +6,20 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:50:49 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/21 15:58:23 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/11/28 18:51:53 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	size(long n)
+static int	ft_nbsize(long n)
 {
-	int		i;
-
-	i = 0;
 	if (n < 0)
-	{
-		n *= -1;
-		i++;
-	}
-	while (n > 0)
-	{
-		n /= 10;
-		i++;
-	}
-	return (i);
+		return (1 + ft_nbsize(-n));
+	else if (n / 10 > 0)
+		return (1 + ft_nbsize(n / 10));
+	else
+		return (1);
 }
 
 char		*ft_itoa(int n)
@@ -37,7 +29,7 @@ char		*ft_itoa(int n)
 	char	*str;
 
 	nb = n;
-	s = size(nb);
+	s = ft_nbsize(nb);
 	if (!(str = (char *)malloc((sizeof(char) * s) + 1)))
 		return (NULL);
 	str[s--] = '\0';

@@ -17,36 +17,33 @@ BONUS = $(SRC)	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
 				ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
 				ft_lstmap.c ft_lstnew.c ft_lstsize.c \
 
+OBJ =			$(subst .c,.o,$(SRC))
+BONUS_OBJ =		$(subst .c,.o,$(BONUS))
 
-OBJ = $(subst .c,.o,$(SRC))
-BONUS_OBJ = $(subst .c,.o,$(BONUS))
+CFLAGS =		-Wall -Werror -Wextra
+CC =			gcc
+LD =			ar rc
 
-CFLAGS = -Wall -Werror -Wextra
+all:			$(NAME)
 
-all: $(NAME)
-
-OBJ : $(subst .o,.c,$(SRC))
-	gcc -c $(CFLAGS) $(SRC)
+OBJ :			$(subst .o,.c,$(SRC))
+				$(CC) -c $(CFLAGS) $(SRC)
 
 bonus :
-	    gcc $(CFLAGS) -c $(BONUS)
-	    ar rc $(NAME) $(BONUS_OBJ)
-	    ranlib $(NAME)
+				$(CC) $(CFLAGS) -c $(BONUS)
+				$(LD) $(NAME) $(BONUS_OBJ)
+				ranlib $(NAME)
 
-$(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
-
+$(NAME):		$(OBJ)
+				$(LD) $(NAME) $(OBJ)
+				ranlib $(NAME)
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+				rm -f $(OBJ) $(BONUS_OBJ)
 
-fclean: clean
-	rm -f $(NAME)
+fclean:			clean
+				rm -f $(NAME)
 
-re: fclean all
+re:				fclean all
 
-main : main.c libft.a
-	gcc -Wall -Wextra -Werror main.c libft.a
-
-.PHONY: clean fclean all re
+.PHONY:			clean fclean all re

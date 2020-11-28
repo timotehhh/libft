@@ -6,7 +6,7 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 15:28:07 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/21 17:31:56 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/11/28 18:54:11 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char		**ft_split(char const *s, char c)
 
 	i = 0;
 	word = -1;
-	if (!(arrays = (char**)malloc((sizeof(char*)
+	if (!s || !(arrays = (char**)malloc((sizeof(char*)
 	* ft_calculate_words((char *)s, c)) + 1)))
 		return (NULL);
 	while (++word < ft_calculate_words((char *)s, c))
