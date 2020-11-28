@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/21 17:21:36 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/21 17:25:24 by agcolas          ###   ########.fr       */
+/*   Created: 2020/11/27 19:13:18 by agcolas           #+#    #+#             */
+/*   Updated: 2020/11/28 02:10:28 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *dest, const char *src)
-{
-	int		i;
+#include "libft.h"
 
-	i = 0;
-	while (src[i])
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	while (lst)
 	{
-		dest[i] = src[i];
-		i++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	dest[i] = '\0';
-	return (dest);
 }
