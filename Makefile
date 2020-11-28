@@ -26,7 +26,7 @@ LD =			ar rc
 
 all:			$(NAME)
 
-OBJ :			$(subst .o,.c,$(SRC))
+OBJ :			$(OBJ)
 				$(CC) -c $(CFLAGS) $(SRC)
 
 bonus :
