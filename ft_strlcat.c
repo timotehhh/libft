@@ -6,31 +6,34 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 16:01:31 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/16 17:00:19 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/11/29 22:14:12 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t count)
+size_t	ft_strlcat(char *dst, const char *src, size_t count)
 {
-	unsigned int i;
-	unsigned int j;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+	size_t	strlen_src;
 
+	strlen_src = ft_strlen(src);
+	if (count == 0)
+		return (strlen_src);
 	i = 0;
 	j = 0;
-	while (count == 0)
-		return (ft_strlen(src));
-	while (dest[i])
+	while (dst[i] != '\0' && i < count)
 		i++;
-	while (src[j] && i + j < count - 1)
+	k = i;
+	if (i < count)
 	{
-		dest[i + j] = src[j];
-		j++;
+		while (i < count - 1 && src[j] != '\0')
+			dst[i++] = src[j++];
+		dst[i] = '\0';
 	}
-	if (j < count)
-		dest[i + j] = '\0';
-	if (count < i)
-		return (ft_strlen(src) + count);
-	return (ft_strlen(src) + i);
+	if (count - 1 < k)
+		return (count + strlen_src);
+	return (strlen_src + k);
 }

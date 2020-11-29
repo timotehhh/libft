@@ -6,78 +6,53 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 15:28:07 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/28 18:54:11 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/11/30 00:23:46 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_is_separator(char c, char charset)
+static int	ft_nbwords(char const *s, char c)
 {
-	if (c == charset)
-		return (1);
-	return (0);
-}
+	int i;
+	int w;
 
-static int	ft_calculate_words(char *s, char charset)
-{
-	int		i;
-	int		nb_words;
-	int		is_word;
-
-	is_word = 0;
-	nb_words = 0;
 	i = 0;
+	w = 0;
 	while (s[i])
 	{
-		if (is_word == 0 && !(ft_is_separator(s[i], charset)))
-		{
-			nb_words++;
-			is_word = 1;
-		}
-		if (ft_is_separator(s[i], charset))
-		{
-			i += 1;
-			is_word = 0;
-		}
-		else
+		while (s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+			w++;
+		while (s[i] && s[i] != c)
 			i++;
 	}
-	return (nb_words);
+	return (w);
 }
 
-static int	ft_calculate_size_words(char *s, char charset)
-{
-	int		i;
-	int		nb_char;
-
-	nb_char = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (!(ft_is_separator(s[i], charset)))
-			nb_char++;
-		else
-		{
-			return (nb_char);
-		}
-		i++;
-	}
-	return (nb_char);
-}
-
-static char	**ft_freearrays(char **arrays)
+static int	ft_sizestr(char const *s, char c)
 {
 	int i;
 
 	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	return (i + 1);
+}
+
+static char	**ft_freearrays(char **arrays)
+{
+	int w;
+
+	w = 0;
 	if (arrays)
 	{
-		while (arrays[i])
+		while (arrays[w])
 		{
-			if (arrays[i] != NULL)
-				free(arrays[i]);
-			i++;
+			if (arrays[w] != NULL)
+				free(arrays[w]);
+			w++;
 		}
 		free(arrays);
 	}
@@ -86,29 +61,29 @@ static char	**ft_freearrays(char **arrays)
 
 char		**ft_split(char const *s, char c)
 {
-	int		i;
-	int		word;
-	int		array_char;
-	int		nb_char;
 	char	**arrays;
+	int		w;
+	int		i;
+	int		count;
 
-	i = 0;
-	word = -1;
-	if (!s || !(arrays = (char**)malloc((sizeof(char*)
-	* ft_calculate_words((char *)s, c)) + 1)))
+	if (!s || !c || !(arrays = (char **)malloc(sizeof(char *)
+	* (ft_nbwords(s, c) + 1))))
 		return (NULL);
-	while (++word < ft_calculate_words((char *)s, c))
+	count = ft_nbwords(s, c);
+	w = 0;
+	while (w < count)
 	{
-		while (ft_is_separator(s[i], c))
-			i += 1;
-		array_char = -1;
-		nb_char = ft_calculate_size_words((char *)&(s[i]), c);
-		if (!(arrays[word] = (char*)malloc((sizeof(char) * nb_char) + 1)))
+		i = 0;
+		while (*s == c)
+			s++;
+		if (!(arrays[w] = (char *)malloc(sizeof(char) * (ft_sizestr(s, c)))))
 			return (ft_freearrays(arrays));
-		while (++array_char < nb_char)
-			arrays[word][array_char] = s[i++];
-		arrays[word][array_char] = '\0';
+		while (*s && *s != c)
+			arrays[w][i++] = *s++;
+		arrays[w++][i] = '\0';
+		while (*s == c)
+			s++;
 	}
-	arrays[word] = NULL;
+	arrays[w] = NULL;
 	return (arrays);
 }
