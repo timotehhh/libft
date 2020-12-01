@@ -6,84 +6,106 @@
 /*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 15:28:07 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/30 00:23:46 by agcolas          ###   ########.fr       */
+/*   Updated: 2020/12/01 18:18:31 by agcolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_nbwords(char const *s, char c)
+static int		ft_count_str(char *str, char c)
 {
-	int i;
-	int w;
-
-	i = 0;
-	w = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		if (s[i] && s[i] != c)
-			w++;
-		while (s[i] && s[i] != c)
-			i++;
-	}
-	return (w);
-}
-
-static int	ft_sizestr(char const *s, char c)
-{
-	int i;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	return (i + 1);
-}
-
-static char	**ft_freearrays(char **arrays)
-{
-	int w;
-
-	w = 0;
-	if (arrays)
-	{
-		while (arrays[w])
-		{
-			if (arrays[w] != NULL)
-				free(arrays[w]);
-			w++;
-		}
-		free(arrays);
-	}
-	return (NULL);
-}
-
-char		**ft_split(char const *s, char c)
-{
-	char	**arrays;
-	int		w;
 	int		i;
 	int		count;
+	int		new_word;
 
-	if (!s || !c || !(arrays = (char **)malloc(sizeof(char *)
-	* (ft_nbwords(s, c) + 1))))
-		return (NULL);
-	count = ft_nbwords(s, c);
-	w = 0;
-	while (w < count)
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
 	{
-		i = 0;
-		while (*s == c)
-			s++;
-		if (!(arrays[w] = (char *)malloc(sizeof(char) * (ft_sizestr(s, c)))))
-			return (ft_freearrays(arrays));
-		while (*s && *s != c)
-			arrays[w][i++] = *s++;
-		arrays[w++][i] = '\0';
-		while (*s == c)
-			s++;
+		new_word = 0;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			new_word = 1;
+			i++;
+		}
+		if (new_word == 1)
+			count++;
 	}
-	arrays[w] = NULL;
-	return (arrays);
+	return (count);
+}
+
+static int		ft_allocate_memory(char **strs, char *str, char c)
+{
+	int		i;
+	int		nb_letter;
+	int		count_word;
+
+	i = 0;
+	count_word = 0;
+	while (str[i] != '\0')
+	{
+		nb_letter = 0;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			nb_letter++;
+			i++;
+		}
+		if (nb_letter > 0)
+		{
+			if (!(strs[count_word] = malloc(sizeof(char) * (nb_letter + 1))))
+				return (0);
+			count_word++;
+		}
+	}
+	return (1);
+}
+
+static void		ft_fill_strs(char **strs, char *str, char c)
+{
+	int		i;
+	int		nb_letter;
+	int		count_word;
+
+	i = 0;
+	count_word = 0;
+	while (str[i] != '\0')
+	{
+		nb_letter = 0;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			strs[count_word][nb_letter] = str[i];
+			nb_letter++;
+			i++;
+		}
+		if (nb_letter > 0)
+		{
+			strs[count_word][nb_letter] = '\0';
+			count_word++;
+		}
+	}
+}
+
+char			**ft_split(char const *s, char c)
+{
+	char	**strs;
+	char	*str;
+	int		nbr_word;
+
+	if (!s)
+		return (NULL);
+	str = (char *)s;
+	nbr_word = ft_count_str(str, c);
+	if (!(strs = malloc(sizeof(char **) * (nbr_word + 1))))
+		return (0);
+	strs[nbr_word] = NULL;
+	if (!ft_allocate_memory(strs, str, c))
+		return (0);
+	ft_fill_strs(strs, str, c);
+	return (strs);
 }
