@@ -3,47 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 20:01:45 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/25 21:37:03 by agcolas          ###   ########.fr       */
+/*   Created: 2021/03/09 15:16:22 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/09 15:16:23 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_searchtrim(char search, char const *set)
+static int	ft_is_charset(char c, char const *set)
 {
-	int		i;
+	int i;
 
 	i = 0;
 	while (set[i])
 	{
-		if (search == set[i])
+		if (set[i] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
+static int	ft_find_len(char const *s1, char const *set)
+{
+	int i;
+	int count;
+
+	count = ft_strlen(s1) - 1;
+	i = 0;
+	while (ft_is_charset(s1[count], set) && count >= 0)
+		count--;
+	while (s1[i] && ft_is_charset(s1[i], set) && count >= 0)
+	{
+		count--;
+		i++;
+	}
+	return (count);
+}
+
+static int	ft_find_end(char const *s1, char const *set)
+{
+	int i;
+
+	i = ft_strlen(s1) - 1;
+	while (ft_is_charset(s1[i], set) && i >= 0)
+		i--;
+	return (i);
+}
+
 char		*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	len;
 	int		i;
-	char	*newstr;
+	int		j;
+	int		size;
+	int		end;
+	char	*result;
 
-	if (s1 == NULL || set == NULL)
+	size = ft_find_len(s1, set);
+	i = 0;
+	j = 0;
+	end = ft_find_end(s1, set);
+	if (!(result = malloc(sizeof(char) * size + 2)))
 		return (NULL);
-	len = ft_strlen(s1);
-	i = len;
-	while (len && ft_searchtrim(s1[--i], set) == 1)
-		len--;
-	while (len && ft_searchtrim(s1[0], set) == 1)
+	result[size + 1] = '\0';
+	while (ft_is_charset(s1[i], set) && i <= end)
+		i++;
+	while (i <= end)
 	{
-		len--;
-		s1++;
+		result[j] = s1[i];
+		i++;
+		j++;
 	}
-	if (!(newstr = ft_substr(s1, 0, len)))
-		return (NULL);
-	return (newstr);
+	return (result);
 }

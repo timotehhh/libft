@@ -3,109 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/21 15:28:07 by agcolas           #+#    #+#             */
-/*   Updated: 2020/12/01 18:18:31 by agcolas          ###   ########.fr       */
+/*   Created: 2021/03/09 15:16:12 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/09 15:16:14 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_count_str(char *str, char c)
+static void	ft_fill_words(char c, const char *str, int place, char *res)
 {
-	int		i;
-	int		count;
-	int		new_word;
+	int i;
+	int count;
+	int j;
+
+	j = 0;
+	i = 0;
+	count = (-1);
+	while (str[i])
+	{
+		while (str[i] && str[i] == c)
+			i++;
+		if (str[i] && str[i] != c)
+		{
+			count++;
+			while (str[i] && count == place && str[i] != c)
+			{
+				res[j] = str[i];
+				i++;
+				j++;
+			}
+			while (str[i] && str[i] != c)
+				i++;
+		}
+	}
+	res[j] = '\0';
+}
+
+static int	ft_count_letrs(char c, const char *str, int place)
+{
+	int i;
+	int count;
+	int size;
 
 	i = 0;
-	count = 0;
-	while (str[i] != '\0')
+	count = (-1);
+	size = 0;
+	while (str[i])
 	{
-		new_word = 0;
-		while (str[i] == c && str[i] != '\0')
+		while (str[i] && str[i] == c)
 			i++;
-		while (str[i] != c && str[i] != '\0')
+		if (str[i] && str[i] != c)
 		{
-			new_word = 1;
-			i++;
-		}
-		if (new_word == 1)
 			count++;
+			while (str[i] && count == place && str[i] != c)
+			{
+				i++;
+				size++;
+			}
+			while (str[i] && str[i] != c)
+				i++;
+		}
+	}
+	return (size);
+}
+
+static int	ft_count_words(char c, const char *str)
+{
+	int i;
+	int count;
+
+	count = 0;
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] == c)
+			i++;
+		if (str[i] && str[i] != c)
+		{
+			count++;
+			while (str[i] && str[i] != c)
+				i++;
+		}
 	}
 	return (count);
 }
 
-static int		ft_allocate_memory(char **strs, char *str, char c)
+char		**ft_split(char const *s, char c)
 {
+	char	**res;
 	int		i;
-	int		nb_letter;
-	int		count_word;
+	int		nb_words;
+	int		letters;
 
-	i = 0;
-	count_word = 0;
-	while (str[i] != '\0')
-	{
-		nb_letter = 0;
-		while (str[i] == c && str[i] != '\0')
-			i++;
-		while (str[i] != c && str[i] != '\0')
-		{
-			nb_letter++;
-			i++;
-		}
-		if (nb_letter > 0)
-		{
-			if (!(strs[count_word] = malloc(sizeof(char) * (nb_letter + 1))))
-				return (0);
-			count_word++;
-		}
-	}
-	return (1);
-}
-
-static void		ft_fill_strs(char **strs, char *str, char c)
-{
-	int		i;
-	int		nb_letter;
-	int		count_word;
-
-	i = 0;
-	count_word = 0;
-	while (str[i] != '\0')
-	{
-		nb_letter = 0;
-		while (str[i] == c && str[i] != '\0')
-			i++;
-		while (str[i] != c && str[i] != '\0')
-		{
-			strs[count_word][nb_letter] = str[i];
-			nb_letter++;
-			i++;
-		}
-		if (nb_letter > 0)
-		{
-			strs[count_word][nb_letter] = '\0';
-			count_word++;
-		}
-	}
-}
-
-char			**ft_split(char const *s, char c)
-{
-	char	**strs;
-	char	*str;
-	int		nbr_word;
-
-	if (!s)
+	nb_words = ft_count_words(c, s);
+	if (!(res = malloc(sizeof(char *) * (nb_words + 1))))
 		return (NULL);
-	str = (char *)s;
-	nbr_word = ft_count_str(str, c);
-	if (!(strs = malloc(sizeof(char **) * (nbr_word + 1))))
-		return (0);
-	strs[nbr_word] = NULL;
-	if (!ft_allocate_memory(strs, str, c))
-		return (0);
-	ft_fill_strs(strs, str, c);
-	return (strs);
+	i = 0;
+	while (i < nb_words)
+	{
+		letters = ft_count_letrs(c, s, i);
+		if (!(res[i] = malloc(sizeof(char) * (letters + 1))))
+			return (NULL);
+		ft_fill_words(c, s, i, res[i]);
+		i++;
+	}
+	res[nb_words] = NULL;
+	return (res);
 }

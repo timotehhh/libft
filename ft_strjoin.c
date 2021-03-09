@@ -3,40 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/21 17:12:14 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/28 18:38:32 by agcolas          ###   ########.fr       */
+/*   Created: 2021/03/09 15:14:01 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/09 15:14:01 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_strcpy(char *dest, const char *src)
+static int	ft_strlenbis(char const *s1, char const *s2)
 {
-	int		i;
+	int i;
+	int j;
 
 	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
+	j = 0;
+	if (s1[0] == '\0' && s2[0] == '\0')
+		return (2);
+	while (s1[i])
 		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	while (s2[j])
+		j++;
+	return (i + j - 1);
 }
 
 char		*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*dest;
-	int		size;
+	int		i;
+	int		j;
+	char	*result;
 
-	if (!s1)
+	i = -1;
+	j = -1;
+	if (!(result = malloc(sizeof(char) * ft_strlenbis(s1, s2))))
 		return (NULL);
-	size = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-	if (!(dest = (char *)malloc((sizeof(char) * size) + 1)))
-		return (NULL);
-	ft_strcpy(dest, s1);
-	ft_strcpy(&dest[ft_strlen(s1)], s2);
-	return (dest);
+	if (s1[0] == '\0' && s2[0] == '\0')
+	{
+		result[0] = '\0';
+		result[1] = '\0';
+		return (result);
+	}
+	while (s1[++i])
+		result[i] = s1[i];
+	while (s2[++j])
+	{
+		result[i] = s2[j];
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
 }

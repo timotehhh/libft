@@ -3,48 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 13:50:49 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/28 18:51:53 by agcolas          ###   ########.fr       */
+/*   Created: 2021/03/09 15:10:24 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/09 15:10:25 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_nbsize(long n)
+static int	ft_find_size(int nb)
 {
-	if (n < 0)
-		return (1 + ft_nbsize(-n));
-	else if (n / 10 > 0)
-		return (1 + ft_nbsize(n / 10));
-	else
+	int i;
+
+	i = 0;
+	if (nb == 0)
 		return (1);
+	if (nb < 0)
+	{
+		i++;
+		nb = nb * (-1);
+	}
+	while (nb != 0)
+	{
+		nb = nb / 10;
+		i++;
+	}
+	return (i);
 }
 
 char		*ft_itoa(int n)
 {
-	int		s;
+	int		i;
+	int		stop;
 	long	nb;
-	char	*str;
+	char	*result;
 
 	nb = n;
-	s = ft_nbsize(nb);
-	if (!(str = (char *)malloc((sizeof(char) * s) + 1)))
+	stop = 0;
+	i = ft_find_size(nb);
+	if (!(result = malloc(sizeof(char) * i + 1)))
 		return (NULL);
-	str[s--] = '\0';
-	if (nb == 0)
-		str[0] = '0';
+	result[i] = '\0';
 	if (nb < 0)
 	{
-		str[0] = '-';
-		nb *= -1;
+		result[0] = '-';
+		stop = 1;
+		nb = nb * (-1);
 	}
-	while (nb > 0)
+	while (--i >= stop)
 	{
-		str[s] = '0' + (nb % 10);
-		nb /= 10;
-		s--;
+		result[i] = (nb % 10) + '0';
+		nb = nb / 10;
 	}
-	return (str);
+	return (result);
 }

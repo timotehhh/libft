@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/10 15:44:28 by agcolas           #+#    #+#             */
-/*   Updated: 2020/09/10 15:45:26 by agcolas          ###   ########.fr       */
+/*   Created: 2021/03/09 15:11:38 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/09 15:11:39 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int		ft_tolower(int c)
 {
-	if (c >= 'A' && c <= 'Z')
-		c = 'a' + (c - 'A');
+	if (c >= 65 && c <= 90)
+		c = c + 32;
 	return (c);
 }

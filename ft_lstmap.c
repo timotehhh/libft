@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agcolas <agcolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/27 19:16:21 by agcolas           #+#    #+#             */
-/*   Updated: 2020/11/28 19:40:21 by agcolas          ###   ########.fr       */
+/*   Created: 2021/03/09 15:11:02 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/09 15:18:07 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		{
 			ft_lstclear(&lst, del);
 			ft_lstclear(&head, del);
-			break ;
+			return (NULL);
 		}
 		lst = lst->next;
 		ft_lstadd_back(&head, newlst);
