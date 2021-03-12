@@ -1,18 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/09 15:14:53 by trouger           #+#    #+#             */
-/*   Updated: 2021/03/12 11:36:48 by trouger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_find_size(size_t len, const char* s, unsigned int start)
+static int	ft_find_size(char const *s, unsigned int start, size_t len)
 {
 	size_t	size;
 
@@ -28,24 +17,25 @@ static int	ft_find_size(size_t len, const char* s, unsigned int start)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*result;
-	unsigned int	i;
-	size_t			end;
-	size_t			size;
-
-	i = start;
-	end = 0;
-	size = ft_find_size(len, s, start);
+	int		i;
+	int		j;
+	char	*result;
+	
+	i = 0;
+	j = 0;
 	if (s == NULL)
 		return (NULL);
-	if (!(result = (char *)malloc((sizeof(char)) * size)))
+	if (!(result = malloc(sizeof(char) * ft_find_size(s, start, len))))
 		return (NULL);
-	while (end < len && i < ft_strlen(s))
+	while (s[i])
 	{
-		result[end] = s[i];
-		end++;
+		if (i >= (int)start && j < (int)len)
+		{
+			result[j] = s[i];
+			j++;
+		}
 		i++;
 	}
-	result[end] = '\0';
+	result[j] = '\0';
 	return (result);
 }
