@@ -6,7 +6,7 @@
 /*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 15:09:35 by trouger           #+#    #+#             */
-/*   Updated: 2021/03/09 15:09:36 by trouger          ###   ########.fr       */
+/*   Updated: 2021/03/12 14:27:28 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_putstr_fd(char *s, int fd)
 	int i;
 
 	i = 0;
+	if (s == NULL)
+		return ;
 	while (s[i])
 	{
 		ft_putchar_fd(s[i], fd);

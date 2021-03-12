@@ -6,7 +6,7 @@
 /*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 15:14:01 by trouger           #+#    #+#             */
-/*   Updated: 2021/03/09 15:14:01 by trouger          ###   ########.fr       */
+/*   Updated: 2021/03/12 14:21:36 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char		*ft_strjoin(char const *s1, char const *s2)
 
 	i = -1;
 	j = -1;
+	if (!s1)
+		return (NULL);
 	if (!(result = malloc(sizeof(char) * ft_strlenbis(s1, s2))))
 		return (NULL);
 	if (s1[0] == '\0' && s2[0] == '\0')

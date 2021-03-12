@@ -6,7 +6,7 @@
 /*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 15:16:22 by trouger           #+#    #+#             */
-/*   Updated: 2021/03/09 15:16:23 by trouger          ###   ########.fr       */
+/*   Updated: 2021/03/12 14:23:55 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char		*ft_strtrim(char const *s1, char const *set)
 	int		end;
 	char	*result;
 
+	if (s1 == NULL || set == NULL)
+		return (NULL);
 	size = ft_find_len(s1, set);
 	i = 0;
 	j = 0;

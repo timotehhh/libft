@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/09 15:13:50 by trouger           #+#    #+#             */
+/*   Updated: 2021/03/12 18:46:51 by trouger          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
@@ -15,12 +26,12 @@ static int	ft_find_size(char const *s, unsigned int start, size_t len)
 	return (size);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char		*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	int		i;
 	int		j;
 	char	*result;
-	
+
 	i = 0;
 	j = 0;
 	if (s == NULL)

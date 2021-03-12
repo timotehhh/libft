@@ -6,7 +6,7 @@
 /*   By: trouger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 15:16:12 by trouger           #+#    #+#             */
-/*   Updated: 2021/03/09 15:16:14 by trouger          ###   ########.fr       */
+/*   Updated: 2021/03/12 14:25:15 by trouger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char		**ft_split(char const *s, char c)
 	int		nb_words;
 	int		letters;
 
+	if (!s)
+		return (NULL);
 	nb_words = ft_count_words(c, s);
 	if (!(res = malloc(sizeof(char *) * (nb_words + 1))))
 		return (NULL);
